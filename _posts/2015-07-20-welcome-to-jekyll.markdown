@@ -18,6 +18,22 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
+Erlang
+
+{% highlight erlang %}
+-module(my_handler).
+
+-behaviour(ebus_handler).
+
+%% API
+-export([handle_msg/2]).
+
+handle_msg({Channel, Msg}, Context) ->
+  io:format("[Pid: ~p][Channel: ~p][Msg: ~p][Ctx: ~p]~n",
+            [self(), Channel, Msg, Context]).
+{% endhighlight %}
+
+
 Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
 
 [jekyll]:      http://jekyllrb.com
