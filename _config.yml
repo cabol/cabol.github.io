@@ -13,7 +13,7 @@ baseurl: ""
 # Owner/author information
 owner:
   name:           Carlos Andres Bolaños R.A
-  avatar:         cabra.jpg
+  avatar:         cabra_photo.jpg
   email:          cabol.dev@gmail.com
   # Use the coder's toolbox at http://coderstoolbox.net/string/#!encoding=xml&action=encode&charset=us_ascii to encode your description into XML string
   description:    Software Engineer

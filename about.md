@@ -6,7 +6,7 @@ imagefeature: cabra_photo.jpg
 chart: true
 ---
 <figure>
-  <img src="{{ site.url }}/images/cabra_photo.jpg" alt="Carlos Andres Bolaños R.A">
+  <img src="{{ site.url }}/images/cabra_photo.jpg" alt="Carlos Andres Bolaños R.A" height="200" width="300">
   <figcaption>Carlos Andres Bolaños R.A</figcaption>
 </figure>
 
