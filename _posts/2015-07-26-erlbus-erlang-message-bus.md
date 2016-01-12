@@ -1,14 +1,16 @@
 ---
 layout: post
 title: "ErlBus: Erlang Message Bus"
-description: "Highly scalable pub/sub message bus written in Erlang"
+description: "Simple and scalable pub/sub message bus written in Erlang"
 date: 2015-07-26
+categories: posts
 tags: [Erlang, Messaging, Programming, Publish Subscribe]
-image:
-  feature: abstract-2.jpg
+permalink: "/erlbus-erlang-message-bus"
 ---
 
-Messaging in [Erlang](http://www.erlang.org) is easy by default, because of its nature. But, why not make it even easier? ridiculously easy, and fun. Well, this is where [ErlBus](https://github.com/cabol/erlbus) comes in; an Open Source project created to provide all what you need around messaging, including quality attributes such as: high performance and scale-out.
+> **IMPORTANT:**: This blog post was written based on [ErlBus 0.1.0](https://github.com/cabol/erlbus/tree/0.1.0). Now there is a new release in progress (`1.0.0`), with a totally different implementation and substantial improvements. To read more about it, you can go to this [Blog Post](http://cabol.github.io/posts/2016/01/13/distributed-scalable-pubsub-in-erlang.html) or directly to the [GitHub Repo](https://github.com/cabol/erlbus).
+
+Messaging in [Erlang](http://www.erlang.org) is easy by default, because of its nature. But, why not make it even easier? ridiculously easy, and fun. Well, this is where [ErlBus](https://github.com/cabol/erlbus/tree/0.1.0) comes in; an Open Source project created to provide all what you need around messaging, including quality attributes such as: high performance and scale-out.
 
 Let's start doing an implementation of a simple but very powerful messaging pattern: [Publish/Subscribe](http://www.enterpriseintegrationpatterns.com/PublishSubscribeChannel.html). In Erlang there are different ways to do it, but I'm going to mention only two (the common ones):
 
@@ -40,7 +42,7 @@ ok
 
 Things to highlight here:
 
-- Is easy, but you have to code more and deal with some annoying things like errors or exceptions.
+- It's easy, but you have to code more and deal with some annoying things like errors or exceptions.
 
 - We have to code the logic for receive incoming messages (a listener), in addition to the message handling logic, and we should only be concerned for handle/process our messages.
 
@@ -190,7 +192,7 @@ Once the pool is subscribed to a channel and some message arrives, it will be pr
 
 **ErlBus** is distributed by nature, inherits all properties of [Distributed Erlang](http://www.erlang.org/doc/reference_manual/distributed.html) and [pg2](http://erlang.org/doc/man/pg2.html). But `pg2` has some limitations, distribution model works with full replication, which can cause problem when we have a considerable amount of subscribers, and at the same time the amount of messages sent is too high. For these scenarios **ErlBus** provides another option: `ebus_dist`, which is built on top of [riak_core](https://github.com/basho/riak_core) and [gproc](https://github.com/uwiger/gproc).
 
-There are more nice features, so I strongly recommend you visit [ErlBus GitHub](https://github.com/cabol/erlbus), you will find more documentation and examples.
+There are more nice features, so I strongly recommend you visit [ErlBus 0.0.1 GitHub](https://github.com/cabol/erlbus/tree/0.1.0), you will find more documentation and examples.
 
 ##Summing Up
 

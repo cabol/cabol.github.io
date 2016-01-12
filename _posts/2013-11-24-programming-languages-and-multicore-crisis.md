@@ -2,9 +2,8 @@
 layout: post
 title: "Programming Languages and Multicore Crisis"
 date: 2013-11-24
-tags: [Technology, Programming, Erlang, Scala]
-image:
-  feature: abstract-10.jpg
+categories: posts
+tags: [Technology, Programming, Erlang]
 ---
 
 For a couple of years ago we have witnessed the rise of programming languages different ​​from conventional imperative paradigm (C/C++, Java, C#, PHP, etc..), such as [Erlang](http://www.erlang.org), [Elixir](http://elixir-lang.org), [Scala](http://www.scala-lang.org), etc. The question is why?

@@ -1,0 +1,36 @@
+# Theme customization - please change from the defaults!
+
+# Color for top bar, links, etc
+highlight_color: '#3498db'
+
+# Profile links on the left sidebar, leave blank to ignore
+social:
+  github: cabol
+  #bitbucket: philipj
+  hacker_news: candresbolanos
+  #stackexchange: 348619
+  #stackoverflow: 348619
+  twitter: candresbolanos
+  #facebook: zuck
+  #tumblr: animalygifs
+  linkedin: cabolanos
+  #gplus: 110552447039675960964
+  #gravatar: 86e6ff8f75f9daef42d53b7f8002fd95
+  #flickr: johndoe
+
+# "Hi, I'm _______"
+name: Carlos Andres Bolaños R.A
+email: candres.bolanos@gmail.com
+tagline: "Software Engineer"
+
+# Google Analytics key, leave blank to ignore
+#google_analytics_key: UA-xxxx-x
+
+# Toggle "Postings are my own" disclaimer in footer
+show_disclaimer: true
+
+# Toggle link/icon to view atom feed (/atom.xml) in sidebar
+#show_atom_feed: true
+
+disqus: true
+disqus_shortname: cabolanos
