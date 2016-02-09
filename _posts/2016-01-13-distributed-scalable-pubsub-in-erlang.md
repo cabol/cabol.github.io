@@ -1,15 +1,16 @@
 ---
-layout: post
 title: "Simple, Distributed and Scalable PubSub in Erlang"
 description: "Building distributed messaging-based apps in Erlang using ErlBus."
 date: 2016-01-13
 categories: posts
 tags: [Erlang, Messaging, Programming, Publish Subscribe]
+comments: true
 ---
 
 This blog post is about how to build high scalable and distributed messaging-based applications using [ErlBus](https://github.com/cabol/erlbus), which is a lightweight and simple library to enable what we want here.  
+<!--more-->
 
-Since current release `1.0.0` (in progress), **ErlBus** was improved substantially. The current **PubSub** implementation was taken from the original, remarkable, and proven [Phoenix PubSub Layer](https://hexdocs.pm/phoenix/Phoenix.PubSub.html),
+Since current release `0.2.0` (in progress), **ErlBus** was improved substantially. The current **PubSub** implementation was taken from the original, remarkable, and proven [Phoenix PubSub Layer](https://hexdocs.pm/phoenix/Phoenix.PubSub.html),
 but re-written in Erlang.
 
 You may be wondering ¿why not to include Phoenix as dependency and call it from Erlang?. Well, there are some thoughts about it:

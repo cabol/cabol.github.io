@@ -1,14 +1,15 @@
 ---
-layout: post
 title: "ErlBus: Erlang Message Bus"
 description: "Simple and scalable pub/sub message bus written in Erlang"
 date: 2015-07-26
 categories: posts
 tags: [Erlang, Messaging, Programming, Publish Subscribe]
-permalink: "/erlbus-erlang-message-bus"
+permalink: '/erlbus-erlang-message-bus/'
+comments: true
 ---
 
-> **IMPORTANT:**: This blog post was written based on [ErlBus 0.1.0](https://github.com/cabol/erlbus/tree/0.1.0). Now there is a new release in progress (`1.0.0`), with a totally different implementation and substantial improvements. To read more about it, you can go to this [Blog Post](http://cabol.github.io/posts/2016/01/13/distributed-scalable-pubsub-in-erlang.html) or directly to the [GitHub Repo](https://github.com/cabol/erlbus).
+> **IMPORTANT:**: This blog post was written based on [ErlBus 0.1.0](https://github.com/cabol/erlbus/tree/0.1.0). Now there is a new release in progress (`0.2.0`), with a totally different implementation and substantial improvements. To read more about it, you can go to this [Blog Post](http://cabol.github.io/posts/2016/01/13/distributed-scalable-pubsub-in-erlang.html) or directly to the [GitHub Repo](https://github.com/cabol/erlbus).
+<!--more-->
 
 Messaging in [Erlang](http://www.erlang.org) is easy by default, because of its nature. But, why not make it even easier? ridiculously easy, and fun. Well, this is where [ErlBus](https://github.com/cabol/erlbus/tree/0.1.0) comes in; an Open Source project created to provide all what you need around messaging, including quality attributes such as: high performance and scale-out.
 
@@ -17,7 +18,7 @@ Let's start doing an implementation of a simple but very powerful messaging patt
 1. Using the native tool/library [pg2](http://erlang.org/doc/man/pg2.html).
 2. Using an external tool/library like [gproc](https://github.com/uwiger/gproc).
 
-###Pub/Sub with pg2
+### Pub/Sub with pg2
 
 **pg2** doesn't provides explicit Pub/Sub functions, so we have to implement that logic ourselves, using the given primitives.
 
@@ -48,7 +49,7 @@ Things to highlight here:
 
 - You will be violating the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle soon, because you'll end up coding the same thing over and over again.
 
-###Pub/Sub with gproc
+### Pub/Sub with gproc
 
 With **gproc** happen almost the same situation, but at least provides a pub/sub module `gproc_ps` to abstract that logic better.
 
@@ -83,7 +84,7 @@ Either with **gproc** or **pg2** we're limited to the pub/sub basics. We don't h
 
 And other things, but don't worry, we'll cover all these things later.
 
-###Pub/Sub with ErlBus
+### Pub/Sub with ErlBus
 
 Now we are on the heart of all this, **ErlBus** is a very lightweight and simple approach to build messaging-based apps. Messaging infrastructure that provides: Publish/Subscribe, Point-To-Point, Event Driven Consumer (Message Handler), Task Executor, etc., all that is missing in the previously explored options, all what you really need and expect from a messaging tool.
 
@@ -188,13 +189,13 @@ ok
 
 Once the pool is subscribed to a channel and some message arrives, it will be processed only by one worker of that pool; this is one way to have a Point-To-Point behavior.
 
-##Distributed ErlBus
+## Distributed ErlBus
 
 **ErlBus** is distributed by nature, inherits all properties of [Distributed Erlang](http://www.erlang.org/doc/reference_manual/distributed.html) and [pg2](http://erlang.org/doc/man/pg2.html). But `pg2` has some limitations, distribution model works with full replication, which can cause problem when we have a considerable amount of subscribers, and at the same time the amount of messages sent is too high. For these scenarios **ErlBus** provides another option: `ebus_dist`, which is built on top of [riak_core](https://github.com/basho/riak_core) and [gproc](https://github.com/uwiger/gproc).
 
 There are more nice features, so I strongly recommend you visit [ErlBus 0.0.1 GitHub](https://github.com/cabol/erlbus/tree/0.1.0), you will find more documentation and examples.
 
-##Summing Up
+## Summing Up
 
 Is extremely important let something clear, **ErlBus** is not a Message Queue System or [MoM](https://en.wikipedia.org/wiki/Message-oriented_middleware) like [RabbitMQ](https://www.rabbitmq.com/). In the **MoM**, channels are represented by queues and messages always cross the **MoM**. With **ErlBus**, [channels](http://www.enterpriseintegrationpatterns.com/MessageChannel.html) are just a logical mechanism to allow communicate two or more endpoints (processes) each other, and messages are directly delivered from senders/publishers to receivers/subscribers; messages arrives to the buffer of each process. According to that, **ErlBus** and **RabbitMQ** drives different problems and applies to different scenarios.
 

@@ -1,0 +1,50 @@
+<nav id="tnav" class="tnav-horizontal">
+  <ul class="tnav-list">
+
+    <li id="tnav-logo" class="tnav-item tnav-has-children tnav-allow-hover no-dropdown-arrow"><a href="#" accesskey="1">Carlos Andres Bolaños R.A. – Blog</a>
+      <ul class="tnav-children">
+        <li class="tnav-item"><a href="{{ site.url }}{{ site.baseurl }}/">Start</a></li>
+        <li class="tnav-item"><a href="https://github.com/cabol">GitHub</a></li>
+        <li class="tnav-item"><a href="https://twitter.com/candresbolanos/">Twitter</a></li>
+        <li class="tnav-item"><a href="http://www.niagara.io/">niagara.io</a></li>
+      </ul>
+    </li>
+
+{% comment %}
+#   This is just an example of a dropdown menu of the navigation.
+#   Delete comments to use it.
+#
+    <li class="tnav-item tnav-hide tnav-has-children tnav-allow-hover"><a href="#">Dropdown</a>
+      <ul class="tnav-children">
+        <li class="tnav-item"><a href="#">Dropdown Item 1</a></li>
+        <li class="tnav-item"><a href="#">Dropdown Item 2</a></li>
+        <li class="tnav-item"><a href="#">Dropdown Item 3</a></li>
+      </ul>
+    </li>
+{% endcomment %}
+
+    <li id="tnav-search" class="tnav-item"><a href="{{ site.url }}{{ site.baseurl }}/search/">{% include svg/search.svg %}</a></li>
+
+    <li id="tnav-share" class="tnav-item tnav-has-children tnav-allow-hover no-dropdown-arrow"><a href="#">{% include svg/share.svg %}</a>
+      <ul class="tnav-children">
+		<li class="tnav-item"><a href="http://twitter.com/share?url={{ site.url }}{{ site.baseurl }}{{ page.url }}&text=&raquo;{{ page.title }}&laquo;&via={{ site.socialmedia.twitter }}">Tweet it</a></li>
+		<li class="tnav-item"><a href="http://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ site.baseurl }}{{ page.url }}">Facebook</a></li>
+		<li class="tnav-item"><a href="http://pinterest.com/pin/create/button/?url={{ site.url }}{{ site.baseurl }}{{ page.url }}&media={{ site.urlimg }}{{ page.image }}&description={{ page.content | truncatewords: 40 | strip_html }}" class="pin-it-button" count-layout="horizontal">Pin It</a></li>
+		<li class="tnav-item"><a href="https://plus.google.com/share?url={{ site.url }}{{ site.baseurl }}/{{ page.url }}">Google Plus</a></li>
+		<li class="tnav-item"><a href="http://www.stumbleupon.com/submit?url={{ site.url }}{{ site.baseurl }}{{ page.url }}&title={{ page.title }}">StumbleUpon</a></li>
+		<li class="tnav-item"><a href="http://reddit.com/submit?url={{ site.url }}{{ site.baseurl }}{{ page.url }}&title={{ page.title }}">Reddit</a></li>
+		<li class="tnav-item"><a href="http://www.linkedin.com/shareArticle?url={{ site.url }}{{ site.baseurl }}/{{ page.url }}&title={{ page.title }}&source={{ site.url }}{{ site.baseurl }}/{{ page.url }}">LinkedIn</a></li>
+		<li class="tnav-item"><a href="mailto:?subject={{ page.title }}&body={{ page.url }}">Email</a></li>
+      </ul>
+    </li>
+
+    <li id="tnav-menu" class="tnav-item tnav-has-children tnav-allow-hover"><a href="#">Navigation</a>
+      <ul class="tnav-children">
+        <li class="tnav-item"><a href="{{ site.url }}{{ site.baseurl }}/info/">About {{ site.title }}</a></li>
+        <li class="tnav-item"><a href="{{ site.url }}{{ site.baseurl }}/contact/">Contact</a></li>
+        <li class="tnav-item tnav-hide"><a href="{{ site.url }}{{ site.baseurl }}/archive/">Archive</a></li>
+      </ul>
+    </li>
+
+  </ul>
+</nav>

@@ -1,0 +1,14 @@
+#- name: "Getting Started"
+#  url: "/getting-started/"
+
+- name: "About <em>ME</em>?"
+  url: "/about-me/"
+
+- name: "All Articles"
+  url: "/archive/"
+
+#- name: "Why I designed <em>Simplicity</em>"
+#  url: "/info/"
+
+#- name: "Style Guide"
+#  url: "/style-guide/"

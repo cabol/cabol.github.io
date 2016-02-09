@@ -1,14 +1,15 @@
 ---
-layout: post
 title: "Programming Languages and Multicore Crisis"
 date: 2013-11-24
 categories: posts
 tags: [Technology, Programming, Erlang]
+comments: true
 ---
 
 For a couple of years ago we have witnessed the rise of programming languages different ​​from conventional imperative paradigm (C/C++, Java, C#, PHP, etc..), such as [Erlang](http://www.erlang.org), [Elixir](http://elixir-lang.org), [Scala](http://www.scala-lang.org), etc. The question is why?
+<!--more-->
 
-###History
+## History
 
 To explain why this phenomenon is happening and why it's getting stronger, we have to refer to the history first. Something happened in 2002, something that changed the way that Microprocessors were being designed and built. Over the last 20 years, chips were being getting bigger and the clock frequency getting faster, until in 2002 they reached the limits of Hardware: "you could not reach the entire chip in one clock cycle". This meant a catastrophe for the Hardware, because it meant stop scaling.
 
@@ -46,7 +47,7 @@ But what has it to do with programming languages​​? Simply that, when hardwa
 
 ¿How much does it hurt? Surely wasting two cores doesn't hurt, 4 cores will hurt a little, 8 cores hurts a little bit more, 16 cores and starts to hurt, 32 cores hurts a lot (Intel "Keifer" project: 32 cores 2009/2012 [9]), 1M cores "ouch" (2019, complete paradigm shift) [4] [6]. Hardware paradigm has shifted into concurrency and/or parallelism, therefore, Software should do it too. A new paradigm called "Concurrency-Oriented Programming" then arises [Ref 4. Joe Armstrong].
 
-###Mutable State and Concurrency
+## Mutable State and Concurrency
 
 ¿Why programming languages ​​like Java, C, C++, C#, etc.., don't fit well in these new computing architectures? Well this is due to several factors, but let's start talking about two that might be the most relevant: mutable state and concurrency.
 
@@ -114,7 +115,7 @@ Now, with ZeroMQ equation works but C is constant: E = MC2, for C = 1 (Figure 6)
 
 Erlang in native way (implements actor model in native way), and Scala with Akka (actor model is optional in Scala), follow the same behavior in Figure 6, E = MC2 for C = 1, because they use message passing and run under the premise of "shared nothing".
 
-###Impedance Mismatch
+## Impedance Mismatch
 
 A little quote first:
 
@@ -224,7 +225,7 @@ We could further complicate the exercise. Another version of `pmap` wouldn't onl
 
 This time I won't show how to implement this distributed version. I'll just say that in Erlang is a matter of adding a few lines more to the code. It is a challenge, and even more in a language like Java, C, C++, C#, etc. . –just try it!
 
-###Multithread Models
+## Multithread Models
 
 Now we will do a lower level analysis, we'll be in Hardware and OS (Operating System) level. Why? Well, performance and scalability of software architectures on multicore Microprocessors depends on the process/thread model implemented by the OS.
 
@@ -271,7 +272,7 @@ By examining different programming languages ​​and their implementations, yo
 
 Therefore, is important to note that is not only the language, if it is functional, object oriented, imperative, declarative, etc., but also in the case of interpreted languages ​​(dependent on a virtual machine), the implementation of the virtual machine and/or guest OS, since from it depends scalability over the multicore architectures and/or multiprocessor.
 
-##Conclusions
+## Conclusions
 
 As a first conclusion, because computing architectures began to change since 2002, programming languages ​​should do it too, since they are directly related each other. We need languages ​​that fit well with the reality of multicore and/or multiprocessor architectures, to enable easy building of concurrent applications, also enable to easily scale to desired levels, exploiting Hardware at 100%. The most relevant cases that fits with this evolution and revolution of multicore and/or multiprocessor architectures are: Erlang/Elixir, Scala/Akka and ZeroMQ –the latter with additional effort, since it is just a library for message passing and concurrency, not a language and/or platform as if they are the first two.
 
@@ -279,7 +280,7 @@ Moreover, to make the software fit naturally in these multicore and/or multiproc
 
 As a final thought, I would like to emphasize that the way what we've been developing applications is changing dramatically, therefore, it is important to begin studying multicore and/or multiprocessor computing architectures, along with languages​​, platforms, tools, etc.., which allow to make appropriate use of them. The paradigm has shifted from programming sequential logic to programming parallel logic, today we talk about a concurrency oriented paradigm [4].
 
-##References
+## References
 
 1. Computer Architecture, A Quantitative Approach – 4th Edition. David Patterson and John Hennessy.
 2. Operating System Concepts – 8th Edition. Abraham Silberschatz, Peter Baer Galvin and Greg Gagne.
