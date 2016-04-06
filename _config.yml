@@ -16,7 +16,7 @@ description:  'TECHNOLOGY, PROGRAMMING, THOUGHTS AND OTHER ESSENTIALS.'
 # Build settings
 url:          'http://cabol.github.io'
 baseurl:      ''
-urlimg:       'http://cabol.github.io/images/'
+urlimg:       'http://cabol.github.io/'
 markdown:     kramdown
 highlighter:  rouge
 #permalink:    /:categories/:title/
