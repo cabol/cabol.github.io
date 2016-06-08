@@ -30,48 +30,21 @@ Now let's see what happens behind scenes when we create/delete a table using `sh
 {% highlight erlang %}
 % let's create a table, such as you would create it with ETS, with 4 shards
 > shards:new(mytab1, [{n_shards, 4}]).
-{mytab1,{4,#Fun<shards_local.pick_shard.3>,set}}
 {% endhighlight %}
 
 Exactly as ETS, `shards:new/2` function receives 2 arguments, the name of the table and
-the options. With `shards` there are additional options:
-
- * `{n_shards, pos_integer()}`: allows to set the desired number of shards. By default, the number of shards is calculated from the total online schedulers.
-
- * `{scope, l | g}`: defines `shards` scope, in other words, if sharding will be applied locally (`l`) or global/distributed (`g`) – default is `l`.
-
- * `{pick_shard_fun, pick_shard_fun()}`: Function to pick the **shard** on which the `key` will be handled locally – used by `shards_local`. See the spec [HERE](https://github.com/cabol/shards/blob/master/src/shards_local.erl#L145).
-
- * `{pick_node_fun, pick_node_fun()}`: Function to pick the **node** on which the `key` will be handled globally/distributed – used by `shards_dist`. See the spec [HERE](https://github.com/cabol/shards/blob/master/src/shards_local.erl#L150).
-
- > **NOTE:** By default `shards` uses a built-in functions to pick the **shard** (local scope) and the **node** (distributed scope) on which the key will be handled. BUT you can override them and set your own functions, they are totally configurable by table, so you can have different tables with different pick-functions each.
-
-Besides, the `shards:new/2` function returns a tuple of two elements:
-
-{% highlight erlang %}
-{mytab1, {4, #Fun<shards_local.pick_shard.3>, set}}
- ^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  1st                     2nd
-{% endhighlight %}
-
-The first element is the name of the created table; `mytab1`. And the second one is the
-[State](./src/shards_local.erl#L159): `{4, #Fun<shards_local.pick_shard.3>, set}`.
-We'll talk about the **State** later, and see how it can be used.
-
-> **NOTE:** For more information about `shards:new/2` go [HERE](./src/shards_local.erl#L796).
+the options – `shards` adds some extra options, please check out the repo to know more about it [HERE](https://github.com/cabol/shards).
 
 Let's create another table:
 
 {% highlight erlang %}
 % create another one with default number of shards, which is the total of online
-% schedulers; in my case is 8 (4 cores, 2 threads each).
+% schedulers – in my case is 8 (4 cores, 2 threads each).
 % This value is calculated calling: erlang:system_info(schedulers_online)
 > shards:new(mytab2, []).
-{mytab2,{8,#Fun<shards_local.pick_shard.3>,set}}
 
 % now open the observer so you can see what happened
 > observer:start().
-ok
 {% endhighlight %}
 
 If you open the `observer` app, you'll see something like this:
@@ -92,10 +65,8 @@ Let's delete a table:
 
 {% highlight erlang %}
 > shards:delete(mytab1).
-true
 
 > observer:start().
-ok
 {% endhighlight %}
 
 See how `shards` gets shrinks:
@@ -136,145 +107,18 @@ true
 [{k1,1},{k2,2}]
 {% endhighlight %}
 
-As you may have noticed, it's extremely easy, it's like use **ETS**, but using `shards` module instead of `ets`. Remember, almost all **ETS** functions are implemented by shards as well.
+As you may have noticed, it's extremely easy, it's like use **ETS**, but using `shards` module instead. Remember, almost all **ETS** functions are implemented by shards as well.
 
-## Using shards_local directly
+## More about Shards
 
-The module `shards` is a wrapper on top of two main modules:
+**Shards** is composed by 4 main modules:
 
- * `shards_local`: Implements **Sharding** on top of ETS tables, but locally (on a single Erlang node).
- * `shards_dist`: Implements **Sharding** but across multiple distributed Erlang nodes, which must run `shards` locally, since `shards_dist` uses `shards_local` internally. We'll cover the distributed part later.
+ * [shards_local](https://github.com/cabol/shards/blob/master/src/shards_local.erl): Implements Sharding on top of ETS tables, but locally (on a single Erlang node).
+ * [shards_dist](https://github.com/cabol/shards/blob/master/src/shards_dist.erl): Implements Sharding but across multiple distributed Erlang nodes, which must run `shards` locally, since `shards_dist` uses `shards_local` internally.
+ * [shards](https://github.com/cabol/shards/blob/master/src/shards.erl): This is a wrapper on top of `shards_local` and `shards_dist`.
+ * [shards_state](https://github.com/cabol/shards/blob/master/src/shards_state.erl): This module encapsulates the `shards` state.
 
-When you use `shards` on top of `shards_local`, an extra call to the control ETS table owned by `shards_owner_sup` is done in order to recover the [State](https://github.com/cabol/shards/blob/master/src/shards_local.erl#L159), mentioned previously.
-Most of the `shards_local` functions receives the **State** as parameter, so it must be fetched before
-to call it.
-
-If any microsecond matters to you, you can skip that call to the control ETS table by calling `shards_local` directly. Now the question is: how to get the **State**? Well, it's extremely easy, you can get the `state` when you call `shards:new/2` by first time, or you can call `shards:state/1` at any time you want, and then it might be store it within the calling process (which might be a `gen_server`), or wherever you want. E.g.:
-
-{% highlight erlang %}
-% take a look at the 2nd element of the returned tuple, that is the state
-> shards:new(mytab, [{n_shards, 4}]).
-{mytab,{4,#Fun<shards_local.pick_shard.3>,set}}
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-% State: {4, #Fun<shards_local.pick_shard.3>, set}
-% 1st element is the number of shards
-% 2nd element is the pick function to select the shard
-% 3rd element is the type of ETS table
-
-% you can also get the state at any time you want
-> shards:state(mytab).
-{4,#Fun<shards_local.pick_shard.3>,set}
-{% endhighlight %}
-
-Most of the cases this is not necessary, `shards` wrapper is more than enough, it adds only a
-few microseconds of latency. In conclusion, **Shards** gives you the flexibility to do it,
-but it's your call!
-
- > **NOTE:** You can see how small is the difference in terms of latency between `shards` and `shards_local` in the **Performance Tests** section below – it'll be covered later.
-
-## Distributed Shards
-
-In this section we'll see how `shards` works but distributed.
-
-**1.** Let's start 3 Erlang consoles running shards:
-
-Node `a`:
-
-{% highlight text %}
-$ erl -sname a@localhost -pa _build/default/lib/*/ebin -s shards
-{% endhighlight %}
-
-Node `b`:
-
-{% highlight text %}
-$ erl -sname b@localhost -pa _build/default/lib/*/ebin -s shards
-{% endhighlight %}
-
-Node `c`:
-
-{% highlight text %}
-$ erl -sname c@localhost -pa _build/default/lib/*/ebin -s shards
-{% endhighlight %}
-
-**2.** Create a table with global scope (`{scope, g}`) on each node:
-
-{% highlight erlang %}
-% when a tables is created with {scope, g}, the module shards_dist is used
-% internally by shards
-> shards:new(mytab, [{n_shards, 4}, {scope, g}]).
-{mytab,{4,#Fun<shards_local.pick_shard.3>,set}}
-{% endhighlight %}
-
-**3.** Setup the `shards` cluster.
-
-From node `a`, join `b` and `c` nodes:
-
-{% highlight erlang %}
-> shards:join(mytab, ['b@localhost', 'c@localhost']).
-[a@localhost,b@localhost,c@localhost]
-{% endhighlight %}
-
-Let's check that all nodes have the same nodes running next function on each node:
-
-{% highlight erlang %}
-> shards:get_nodes(mytab).
-[a@localhost,b@localhost,c@localhost]
-{% endhighlight %}
-
-**4.** Now **Shards** cluster is ready, let's do some basic operations:
-
-From node `a`:
-
-{% highlight erlang %}
-> shards:insert(mytab, [{k1, 1}, {k2, 2}]).
-true
-{% endhighlight %}
-
-From node `b`:
-
-{% highlight erlang %}
-> shards:insert(mytab, [{k3, 3}, {k4, 4}]).
-true
-{% endhighlight %}
-
-From node `c`:
-
-{% highlight erlang %}
-> shards:insert(mytab, [{k5, 5}, {k6, 6}]).
-true
-{% endhighlight %}
-
-Now, from any of previous nodes:
-
-{% highlight erlang %}
-> [shards:lookup_element(mytab, Key, 2) || Key <- [k1, k2, k3, k4, k5, k6]].
-[1,2,3,4,5,6]
-{% endhighlight %}
-
-All nodes should return the same result.
-
-Let's do some deletions, from any node:
-
-{% highlight erlang %}
-> shards:delete(mytab, k6).
-true
-{% endhighlight %}
-
-And again, let's check it out from any node:
-
-{% highlight erlang %}
-% as you can see 'k6' was deleted
-> shards:lookup(mytab, k6).
-[]
-
-% check remaining values
-> [shards:lookup_element(mytab, Key, 2) || Key <- [k1, k2, k3, k4, k5]].    
-[1,2,3,4,5]
-{% endhighlight %}
-
-> **NOTE**: This module is still under continuous development. So far, only few
-  basic functions have been implemented.
+To learn more about **Shards** please check it out on [GitHub](https://github.com/cabol/shards) – you'll find more documentation and examples about all its features.
 
 ## Performance Tests
 
@@ -295,7 +139,7 @@ Performance tests are not easy to perform, so one of the best recommendation is 
 In the next figure, we can notice how is the latency trend for each module. Latencies for `ets` tends to increase with the traffic faster than `shards`, which is precisely the goal, be able to scale across locks, adding more shards as long as traffic increases. In this case, the test was done using 4 shards, and you can see how with the generated traffic (~150.000 ops/sec), `shards` and `shards_local` latencies were better than `ets` – only a few microseconds but the thing is there was an improvement.
 
 <p align="center"><a href="#">
-  <img src="{{ site.baseurl }}/assets/posts/shards/Latencies_ETS_Vs_Shards_4shards.png" height="600" width="100%">
+  <img src="{{ site.baseurl }}/assets/posts/shards/Latency.png" height="600" width="100%">
 </a></p>
 <p align="center"><span class="caption text-muted">Latencies: ets vs shards vs shards_local.</span></p>
 
@@ -304,7 +148,7 @@ In the next figure, we can notice how is the latency trend for each module. Late
 The max generated throughput was ~150.000 ops/seg for all compared modules – oscillations were between 100.000 and 200.000 ops/sec.
 
 <p align="center"><a href="#">
-  <img src="{{ site.baseurl }}/assets/posts/shards/Throughput_ETS_Vs_Shards_4shards.png" height="600" width="100%">
+  <img src="{{ site.baseurl }}/assets/posts/shards/Throughput.png" height="600" width="100%">
 </a></p>
 <p align="center"><span class="caption text-muted">Throughput: ets vs shards vs shards_local.</span></p>
 
