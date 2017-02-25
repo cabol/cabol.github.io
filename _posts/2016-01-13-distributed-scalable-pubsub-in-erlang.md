@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Simple, Distributed and Scalable PubSub in Erlang"
 description: "Building distributed messaging-based apps in Erlang using ErlBus."
 date: 2016-01-13

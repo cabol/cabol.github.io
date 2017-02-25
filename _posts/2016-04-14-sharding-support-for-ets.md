@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Transparent and out-of-box Sharding support for ETS tables in Erlang/Elixir."
 description: "Sharding implementation on top of ETS tables, with the same ETS API."
 date: 2016-04-14
@@ -7,9 +8,10 @@ tags: [Erlang, Elixir, Programming, ETS, Sharding]
 comments: true
 ---
 
-<img src="http://cabol.github.io/assets/posts/shards/steven_universe_gem_shards.png" align="right" style="float:right" height="420" width="380" />
+<img src="http://cabol.github.io/assets/posts/shards/steven_universe_gem_shards.png" align="right" style="float:right" height="200" width="300" />
 This blog post is about how to scale-out [ETS](http://erlang.org/doc/man/ets.html) tables and be able to support high levels of concurrency without worrying about write-locks. Here is where [Shards](https://github.com/cabol/shards) comes in. [Shards](https://github.com/cabol/shards) is an **Erlang/Elixir** tool compatible with the ETS API, that implements [Sharding](https://en.wikipedia.org/wiki/Partition_(database)) support on top of ETS totally transparent and out-of-box.
-<!--more-->
+<!--more--><br /><br /><br />
+
 
 ## Introduction
 
@@ -29,6 +31,7 @@ Now let's see what happens behind scenes when we create/delete a table using `sh
 
 {% highlight erlang %}
 % let's create a table, such as you would create it with ETS, with 4 shards
+
 > shards:new(mytab1, [{n_shards, 4}]).
 {% endhighlight %}
 
@@ -41,9 +44,11 @@ Let's create another table:
 % create another one with default number of shards, which is the total of online
 % schedulers – in my case is 8 (4 cores, 2 threads each).
 % This value is calculated calling: erlang:system_info(schedulers_online)
+
 > shards:new(mytab2, []).
 
 % now open the observer so you can see what happened
+
 > observer:start().
 {% endhighlight %}
 

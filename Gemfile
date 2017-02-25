@@ -1,7 +1,9 @@
-source 'https://rubygems.org'
+# If you have OpenSSL installed, we recommend updating
+# the following line to use "https"
+source 'http://rubygems.org'
 
-gem 'jekyll'
-gem 'pygments.rb', '~> 0.6.3'
-gem 'jekyll-gist'
-gem 'jekyll-sitemap'
-gem 'jekyll-paginate'
+group :development do
+  gem 'rake', '~> 10.4.2'
+  gem 'sass', '~> 3.4.10'
+  gem 'jekyll', '~> 2.5.3'
+end

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Programming Languages and Multicore Crisis"
 date: 2013-11-24
 categories: posts

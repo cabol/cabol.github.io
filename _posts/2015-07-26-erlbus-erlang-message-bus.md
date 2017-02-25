@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "ErlBus: Erlang Message Bus"
 description: "Simple and scalable pub/sub message bus written in Erlang"
 date: 2015-07-26
