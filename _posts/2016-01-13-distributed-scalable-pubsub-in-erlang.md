@@ -6,6 +6,8 @@ date: 2016-01-13
 categories: posts
 tags: [Erlang, Messaging, Programming, Publish Subscribe]
 comments: true
+permalink: '/posts/2016/01/13/distributed-scalable-pubsub-in-erlang.html/'
+feature_image: "https://unsplash.it/1200/400?image=524"
 ---
 
 This blog post is about how to build high scalable and distributed messaging-based applications using [ErlBus](https://github.com/cabol/erlbus), which is a lightweight and simple library to enable what we want here.  

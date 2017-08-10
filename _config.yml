@@ -1,4 +1,38 @@
-# Site settings
+# Site configuration
+# 1. Files excluded from Jekyll builds
+# 2. Installed Gems
+# 3. Site settings
+# 4. Jekyll settings
+# 5. Collections
+# 6. Jekyll collections settings
+# 7. Site settings
+# 8. Site navigation
+
+# 1. Files excluded from Jekyll builds
+exclude:
+- README.md
+- CODE_OF_CONDUCT.md
+- CONTRIBUTING.md
+- screenshot.png
+- LICENSE
+- CNAME
+- Gemfile
+- Gemfile.lock
+- demo/*
+- alembic-jekyll-theme.gemspec
+
+# 2. Installed Gems
+gems:
+- jekyll-sitemap
+- jekyll-mentions
+- jekyll-paginate
+- jekyll-seo-tag
+- jekyll-redirect-from
+- jekyll-feed
+- jemoji
+
+# 3. Site settings
+encoding: utf-8 # Make sure the encoding is right
 title: 'Carlos Andres Bolaños'
 email: 'candres.bolanos@gmail.com'
 description: 'TECHNOLOGY, PROGRAMMING, THOUGHTS AND OTHER ESSENTIALS.'
@@ -13,50 +47,9 @@ author:
   linkedin : http://linkedin.com/in/cabolanos
   github   : http://github.com/cabol
 
-disqus: true
-disqus_shortname: cabolanos
+twitter:
+  username: candresbolanos
 
-paginate: 4
-comments: true
-paginate_path: "/page/:num"
-
-sass:
-  style: :compressed
-  sass_dir: _sass
-
-# Build settings
-markdown  : kramdown
-
-# Exclude these files from your production _site
-exclude:
-  - .sass-cache
-  - Gemfile
-  - Gemfile.lock
-  - README.md
-  - INSTALL.md
-
-# Default Settings
-defaults:
-  -
-    scope:
-      path: ''        # an empty string here means all files in the project
-      type: 'pages'
-    values:
-      layout: page      # Set default layout to page
-      show_meta: false  # Hide metadata for all pages
-      comments: false
-      author: 'Carlos Andres Bolaños'     # Default author for pages
-  -
-    scope:
-      path: ''
-      type: 'posts'
-    values:
-      layout: page      # Set default layout to page
-      show_meta: true   # Show metadata for all posts
-      comments: false
-      author: 'Carlos Andres Bolaños'     # Default author for posts
-
-# social footer
 social:
   github:
     slug: github
@@ -67,3 +60,66 @@ social:
   linkedin:
     slug: linkedin
     link: http://linkedin.com/in/cabolanos
+
+disqus: true
+disqus_shortname: cabolanos
+
+paginate: 4
+comments: true
+#paginate_path: "/page/:num"
+paginate_path: blog/page:num
+
+logo: "/assets/logo.svg" # Site logo, also used in jekyll-seo-tag
+avatarurl: "/images/avatar.jpg"
+
+# 4. Jekyll settings
+sass:
+  style: compressed # Style compression
+  sass_dir: _sass
+permalink: pretty  # Permalink style (/YYYY/MM/DD/page-name/)
+excerpt_separator: <!-- more --> # Marks end of excerpt in posts
+
+# 5. Collections
+collections:
+  posts:
+    title: Posts # Needed for Siteleaf
+    output: true
+    description: "TECHNOLOGY, PROGRAMMING, THOUGHTS AND OTHER ESSENTIALS." # The post list page content
+    feature_text: |
+      Welcome to my blog
+    feature_image: "https://unsplash.it/1300/400?image=881"
+
+# 6. Jekyll collections settings
+defaults:
+  -
+    scope:
+      path: ""
+      type: pages
+    values:
+      layout: page # Default layout
+      image: "/assets/default-social-image.png" # Default image for sharing
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      layout: post # Default layout
+      image: "/assets/default-social-image.png" # Default image for sharing
+
+# 8. Site navigation
+navigation_header:
+  Home: /
+  Blog: /blog/
+  Categories: /categories/
+  Search: /search/
+
+navigation_footer:
+  Made with Jekyll using alembic theme: https://alembic.darn.es
+
+social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
+  Twitter: https://twitter.com/candresbolanos
+  LinkedIn: https://www.linkedin.com/in/cabolanos
+  Google+: https://plus.google.com/u/1/101773583932530426614
+  GitHub: https://github.com/cabol
+  link: https://cabol.github.io
+  RSS: /feed.xml

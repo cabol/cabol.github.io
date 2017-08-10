@@ -7,6 +7,7 @@ categories: posts
 tags: [Erlang, Messaging, Programming, Publish Subscribe]
 permalink: '/erlbus-erlang-message-bus/'
 comments: true
+feature_image: "https://unsplash.it/1200/400?image=352"
 ---
 
 > **IMPORTANT:**: This blog post was written based on [ErlBus 0.1.0](https://github.com/cabol/erlbus/tree/0.1.0). Now there is a new release in progress (`0.2.0`), with a totally different implementation and substantial improvements. To read more about it, you can go to this [Blog Post](http://cabol.github.io/posts/2016/01/13/distributed-scalable-pubsub-in-erlang.html) or directly to the [GitHub Repo](https://github.com/cabol/erlbus).
